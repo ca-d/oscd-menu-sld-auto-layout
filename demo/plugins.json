@@ -1,0 +1,45 @@
+{
+  "menu": [
+    {
+      "name": "Open file",
+      "icon": "folder_open",
+      "src": "https://omicronenergyoss.github.io/oscd-menu-commons/oscd-menu-open.js"
+    },
+    {
+      "name": "Save file",
+      "icon": "save",
+      "requireDoc": true,
+      "src": "https://omicronenergyoss.github.io/oscd-menu-commons/oscd-menu-save.js"
+    },
+    {
+      "name": "Auto layout SLD",
+      "translations": {
+        "de": "SLD automatisch layouten"
+      },
+      "icon": "account_tree",
+      "requireDoc": true,
+      "src": "../oscd-menu-sld-auto-layout.js"
+    }
+  ],
+  "editor": [
+    {
+      "name": "SLD",
+      "translations": {
+        "de": "SLD"
+      },
+      "icon": "add_box",
+      "requireDoc": true,
+      "src": "https://omicronenergyoss.github.io/oscd-editor-sld/oscd-editor-sld.js"
+    },
+    {
+      "name": "Source Editor",
+      "translations": {
+        "de": "Source Editor"
+      },
+      "icon": "code",
+      "requireDoc": true,
+      "src": "https://omicronenergyoss.github.io/oscd-editor-source/oscd-editor-source.js"
+    }
+  ],
+  "background": []
+}

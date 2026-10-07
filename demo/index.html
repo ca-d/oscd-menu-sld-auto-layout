@@ -1,1 +1,63 @@
-<html><head><title>oscd-menu-sld-auto-layout demo</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&amp;family=Roboto:wght@300;400;500&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&amp;display=block"></head><body><oscd-shell></oscd-shell><style>*{--oscd-theme-primary:#2aa198;--oscd-theme-secondary:#6c71c4;--oscd-theme-error:#dc322f;--oscd-theme-base03:#002b36;--oscd-theme-base02:#073642;--oscd-theme-base01:#586e75;--oscd-theme-base00:hsl(196, 13%, 45%);--oscd-theme-base0:#839496;--oscd-theme-base1:#93a1a1;--oscd-theme-base2:#eee8d5;--oscd-theme-base3:#fdf6e3;--oscd-theme-text-font:'Roboto';--oscd-theme-icon-font:'Material Symbols Outlined';margin:0;padding:0}abbr{text-decoration:none;border-bottom:none}</style><script type="module" src="./inline-module-788f752011c8934368e7dcb29adb4198.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>oscd-menu-sld-auto-layout demo</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block"
+    />
+    <style>
+      * {
+        --oscd-theme-primary: #2aa198;
+        --oscd-theme-secondary: #6c71c4;
+        --oscd-theme-error: #dc322f;
+
+        --oscd-theme-base03: #002b36;
+        --oscd-theme-base02: #073642;
+        --oscd-theme-base01: #586e75;
+        --oscd-theme-base00: hsl(196, 13%, 45%);
+        --oscd-theme-base0: #839496;
+        --oscd-theme-base1: #93a1a1;
+        --oscd-theme-base2: #eee8d5;
+        --oscd-theme-base3: #fdf6e3;
+
+        --oscd-theme-text-font: 'Roboto';
+        --oscd-theme-icon-font: 'Material Symbols Outlined';
+
+        margin: 0;
+        padding: 0;
+      }
+
+      abbr {
+        text-decoration: none;
+        border-bottom: none;
+      }
+    </style>
+  </head>
+  <body>
+    <oscd-shell></oscd-shell>
+    <script type="module">
+      import 'https://omicronenergyoss.github.io/oscd-shell/oscd-shell.js';
+
+      const editor = document.querySelector('oscd-shell');
+      const response = await fetch('./plugins.json');
+      if (!response.ok) throw new Error(`Failed to load plugins.json: ${response.status}`);
+      editor.plugins = await response.json();
+
+      const params = new URL(document.location).searchParams;
+      for (const [name, value] of params) editor.setAttribute(name, value);
+
+      const sample = await fetch('./sample.scd').then(response => response.text());
+      editor.docs = {
+        'sample.scd': new DOMParser().parseFromString(sample, 'application/xml'),
+      };
+      editor.docName = 'sample.scd';
+    </script>
+  </body>
+</html>
