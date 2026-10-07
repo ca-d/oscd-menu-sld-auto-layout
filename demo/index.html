@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -43,21 +43,43 @@
   <body>
     <oscd-shell></oscd-shell>
     <script type="module">
-      import 'https://omicronenergyoss.github.io/oscd-shell/oscd-shell.js';
+      try {
+        await import(
+          'https://omicronenergyoss.github.io/oscd-shell/oscd-shell.js'
+        );
 
-      const editor = document.querySelector('oscd-shell');
-      const response = await fetch('./plugins.json');
-      if (!response.ok) throw new Error(`Failed to load plugins.json: ${response.status}`);
-      editor.plugins = await response.json();
+        const editor = document.querySelector('oscd-shell');
+        const pluginResponse = await fetch('./plugins.json');
+        if (!pluginResponse.ok)
+          throw new Error(
+            `Failed to load plugins.json: ${pluginResponse.status}`
+          );
+        editor.plugins = await pluginResponse.json();
 
-      const params = new URL(document.location).searchParams;
-      for (const [name, value] of params) editor.setAttribute(name, value);
+        const params = new URL(document.location).searchParams;
+        for (const [name, value] of params) editor.setAttribute(name, value);
 
-      const sample = await fetch('./sample.scd').then(response => response.text());
-      editor.docs = {
-        'sample.scd': new DOMParser().parseFromString(sample, 'application/xml'),
-      };
-      editor.docName = 'sample.scd';
+        const sampleResponse = await fetch('./sample.scd');
+        if (!sampleResponse.ok)
+          throw new Error(
+            `Failed to load sample.scd: ${sampleResponse.status}`
+          );
+        const sample = await sampleResponse.text();
+        editor.docs = {
+          'sample.scd': new DOMParser().parseFromString(
+            sample,
+            'application/xml'
+          ),
+        };
+        editor.docName = 'sample.scd';
+      } catch (error) {
+        console.error(error);
+        const message = document.createElement('pre');
+        message.textContent = `Demo initialization failed: ${
+          error instanceof Error ? error.message : error
+        }`;
+        document.body.replaceChildren(message);
+      }
     </script>
   </body>
 </html>
